@@ -1,0 +1,26 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: USDC
+    network: matic
+    source:
+      address: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+      abi: USDC
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ProxyOwnerUpdate
+        - ProxyUpdated
+      abis:
+        - name: USDC
+          file: ./abis/USDC.json
+      eventHandlers:
+        - event: ProxyOwnerUpdate(address,address)
+          handler: handleProxyOwnerUpdate
+        - event: ProxyUpdated(indexed address,indexed address)
+          handler: handleProxyUpdated
+      file: ./src/mapping.ts
